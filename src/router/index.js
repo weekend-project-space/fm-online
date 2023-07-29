@@ -8,10 +8,10 @@ const About = {
 }
 const routes = [{
         path: '/',
-        component: import('../views/Index.vue')
+        component: () => import('@/views/Index.vue')
     }, {
         path: '/setup',
-        component: import('../views/Setup.vue')
+        component: () => import('@/views/Setup.vue')
     },
     {
         path: '/about',
