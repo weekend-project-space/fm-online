@@ -40,7 +40,11 @@ function loadData() {
       const list = [
         {
           name: "#",
-          children: d,
+          children: d.filter((o) =>
+            location.protocol == "https:"
+              ? o.url.includes(location.protocol)
+              : true
+          ),
         },
       ];
       data.value = list;
