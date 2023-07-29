@@ -9,10 +9,22 @@ import {
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [VitePWA({
+    includeAssets: ['logo.png', 'logo-min.png'],
+    manifest: {
+      name: '01234FM',
+      short_name: 'FM',
+      description: 'FM Online',
+      theme_color: '#ffffff',
+      icons: [{
+        src: 'logo.png',
+        sizes: '64x64',
+        type: 'image/png'
+      }, ]
+    },
     registerType: 'autoUpdate',
     devOptions: {
-      injectRegister: 'inline',
-      injectManifest: 'inline',
+      // injectRegister: 'inline',
+      // injectManifest: 'inline',
       enabled: true
     }
   }), vue()],
