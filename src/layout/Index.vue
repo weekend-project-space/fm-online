@@ -81,16 +81,24 @@
         <slot></slot>
       </v-container>
     </v-main>
-    <v-footer>
+    <v-footer app style="z-index: 10000">
       <slot name="footer"></slot>
     </v-footer>
   </v-layout>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
+import { useRoute } from "vue-router";
+const route = useRoute();
 const drawer = ref(false);
-const value = ref("");
+const value = ref(route.query.q || "");
+watch(
+  () => route.query.q,
+  (q) => {
+    value.value = q;
+  }
+);
 </script>
 <style lang="less" scoped>
 .search {
@@ -149,6 +157,20 @@ const value = ref("");
     }
   }
 }
+
+.logo-warp {
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+  img {
+    height: 36px;
+  }
+}
+.logo-text {
+  margin-left: 10px;
+  color: var(--color);
+  font-size: 1.2rem;
+}
 :deep(.apps) {
   .v-btn {
     height: 64px;
@@ -169,19 +191,6 @@ const value = ref("");
 .v-navigation-drawer__scrim {
   background: transparent !important;
 }
-.logo-warp {
-  margin-left: 10px;
-  display: flex;
-  align-items: center;
-  img {
-    height: 36px;
-  }
-}
-.logo-text {
-  margin-left: 10px;
-  color: var(--color);
-  font-size: 1.2rem;
-}
 .mdi:before,
 .mdi-set {
   color: var(--color);
@@ -193,14 +202,17 @@ const value = ref("");
 :root {
   --color: #5f6368;
 }
-.v-footer {
-  position: fixed;
-  width: 100%;
-  bottom: 0;
-  padding: 1em;
-  z-index: 10000;
-  border-top: 1px solid #e0e0e0;
+#app .v-footer {
+  padding: 0;
 }
+// .v-footer {
+//   position: fixed;
+//   // width: 100%;
+//   // bottom: 0;
+//   // padding: 1em;
+//   z-index: 100000000;
+//   border-top: 1px solid #e0e0e0;
+// }
 /* .v-list-item {
   grid-template-columns: 42px auto 0px;
 } */
