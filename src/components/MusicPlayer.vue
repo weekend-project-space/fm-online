@@ -23,7 +23,7 @@
             variant="text"
             size="50"
             icon="mdi-open-in-new"
-            :href="'http://01234.fun/#/?url=' + value"
+            :href="'https://tv.01234.fun/#/?url=' + value"
             title="新窗口打开"
           >
           </v-btn>
