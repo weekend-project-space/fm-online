@@ -49,7 +49,7 @@
               <div>fm</div>
             </v-btn>
             <v-btn class="app" variant="text" href="http://01234.fun">
-              <img src="http://01234.fun/favicon.ico" alt="" />
+              <img src="https://tv.01234.fun/favicon.ico" alt="" />
               <div>tv</div>
             </v-btn>
             <v-btn class="app" variant="text" href="https://webfollow.cc">
