@@ -4,4 +4,8 @@ import {
 } from 'vuetify'
 import '@mdi/font/css/materialdesignicons.css'
 
-export default createVuetify({})
+export default createVuetify({
+    theme: {
+        defaultTheme: 'light'
+    }
+})

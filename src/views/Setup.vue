@@ -13,7 +13,7 @@
     <v-btn
       variant="tonal"
       block
-      color="#6200ee"
+      color="blue-darken-2"
       :disabled="!value"
       @click="$router.push('/?s=' + value)"
       >订阅</v-btn
@@ -27,7 +27,6 @@ const value = ref("");
 
 <style lang="less" scoped>
 .setup {
-  --color: none;
   margin-top: 10vh;
   max-width: 360px;
   text-align: center;

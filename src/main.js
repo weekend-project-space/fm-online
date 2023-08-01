@@ -1,7 +1,7 @@
 import {
     createApp
 } from 'vue'
-import './style.css'
+import './style.less'
 import plugins from './plugins'
 import App from './App.vue'
 

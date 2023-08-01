@@ -57,9 +57,6 @@ watch(props, () => {
   background-color: transparent;
 }
 .custom-player-controls {
-  color: #000;
-  // display: grid;
-  // grid-template-columns: min(auto, 200px) 1fr min(auto, 200px);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -81,7 +78,6 @@ watch(props, () => {
   justify-content: flex-start;
 }
 .title {
-  color: var(--color);
   font-size: 1.2em;
   line-height: 2em;
   min-width: calc(100% - 50px);
@@ -89,6 +85,6 @@ watch(props, () => {
 </style>
 <style lang="less">
 .video-js .v-btn--icon .v-icon {
-  --v-icon-size-multiplier: 1.8;
+  --v-icon-size-multiplier: 1.6;
 }
 </style>

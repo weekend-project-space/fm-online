@@ -3,19 +3,25 @@
     <h3 v-text="c.name"></h3>
     <v-row>
       <v-col v-for="item in c.children" :key="item.url">
-        <v-card variant="none" min-width="130">
-          <v-img
-            class="rounded-lg img"
-            v-ripple
-            :aspect-ratio="1 / 1"
-            :src="(item.meta && item.meta['tvg-logo']) || '/logo.png'"
-          >
-            <div class="action" @click="setFM(item)">
-              <v-icon size="32">mdi-play</v-icon>
-            </div>
-          </v-img>
-          <div class="my-2">{{ item.name }}</div>
-        </v-card>
+        <v-lazy
+          :min-height="200"
+          :options="{ threshold: 0.5 }"
+          transition="fade-transition"
+        >
+          <v-card variant="none" min-width="130">
+            <v-img
+              class="rounded-lg img"
+              v-ripple
+              :aspect-ratio="1 / 1"
+              :src="(item.meta && item.meta['tvg-logo']) || '/logo.png'"
+            >
+              <div class="action" @click="setFM(item)">
+                <v-icon size="32">mdi-play</v-icon>
+              </div>
+            </v-img>
+            <div class="my-2 title">{{ item.name }}</div>
+          </v-card>
+        </v-lazy>
       </v-col>
     </v-row>
   </div>
@@ -84,6 +90,9 @@ onMounted(() => {
   color: var(--color);
   h3 {
     line-height: 3em;
+  }
+  .title {
+    text-align: center;
   }
 }
 .action {

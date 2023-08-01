@@ -36,7 +36,7 @@
       <template v-slot:append>
         <v-menu>
           <template v-slot:activator="{ props }">
-            <v-btn icon="mdi:mdi-apps" v-bind="props"></v-btn>
+            <v-btn icon="mdi:mdi-apps" v-bind="props" class="mx-1"></v-btn>
           </template>
 
           <v-card class="apps">
@@ -62,6 +62,14 @@
             </v-btn>
           </v-card>
         </v-menu>
+        <v-btn
+          :icon="
+            theme.global.name.value == 'dark'
+              ? 'mdi-weather-sunny'
+              : 'mdi-weather-night'
+          "
+          @click="toggleTheme"
+        ></v-btn>
       </template>
     </v-app-bar>
     <v-navigation-drawer v-model="drawer" :border="0" temporary>
@@ -76,7 +84,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-main>
+    <v-main :class="themeName">
       <v-container>
         <slot></slot>
       </v-container>
@@ -88,17 +96,43 @@
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
+import { useTheme } from "vuetify";
 import { useRoute } from "vue-router";
 const route = useRoute();
+const theme = useTheme();
+const themeName = computed(() => "v-theme--" + theme.global.name.value);
 const drawer = ref(false);
 const value = ref(route.query.q || "");
+const toggleTheme = () => {
+  theme.global.name.value = theme.global.current.value.dark ? "light" : "dark";
+  initBarBg(theme.global.name.value);
+  localStorage.setItem("theme-name", theme.global.name.value);
+};
+
+function initBarBg(v) {
+  let themeColors = {
+    beige: "#f5f5d5",
+    light: "#fff",
+    dark: "#111",
+  };
+  // console.log(v, themeColors[v]);
+  let el = document.querySelector('meta[name="theme-color"]');
+  el && el.setAttribute("content", themeColors[v]);
+  document.body.style.backgroundColor = themeColors[v];
+}
+
 watch(
   () => route.query.q,
   (q) => {
     value.value = q;
   }
 );
+
+onMounted(() => {
+  theme.global.name.value = localStorage.getItem("theme-name") || "light";
+  initBarBg(theme.global.name.value);
+});
 </script>
 <style lang="less" scoped>
 .search {
@@ -108,7 +142,8 @@ watch(
   background: rgba(var(--v-theme-on-surface-variant), 0.8);
   margin-left: 80px;
   width: 730px;
-  border-radius: 24px;
+  // border-radius: 24px;
+  border-radius: 10px;
   display: grid;
   grid-template-columns: 40px auto 40px;
   align-content: center;
@@ -138,15 +173,18 @@ watch(
     box-shadow: 0px 2px 2px rgb(var(--v-theme-on-surface-variant));
   }
 }
+.v-menu > .v-overlay__content > .v-card {
+  border-radius: 1.5rem;
+}
 .apps {
   width: 300px;
-  padding: 1rem 1rem;
+  padding: 2rem 1.5rem;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-gap: 2rem;
+  grid-gap: 1rem;
   text-align: center;
   justify-items: center;
-  border-radius: 1em;
+
   .app {
     font-size: 0.8rem;
     font-weight: normal;
@@ -191,31 +229,14 @@ watch(
 .v-navigation-drawer__scrim {
   background: transparent !important;
 }
-.mdi:before,
-.mdi-set {
-  color: var(--color);
-}
+
 .v-btn--icon.v-btn--density-default {
   width: calc(var(--v-btn-height) + 6px);
   height: calc(var(--v-btn-height) + 6px);
 }
-:root {
-  --color: #5f6368;
-}
 #app .v-footer {
   padding: 0;
 }
-// .v-footer {
-//   position: fixed;
-//   // width: 100%;
-//   // bottom: 0;
-//   // padding: 1em;
-//   z-index: 100000000;
-//   border-top: 1px solid #e0e0e0;
-// }
-/* .v-list-item {
-  grid-template-columns: 42px auto 0px;
-} */
 .v-list-item-title {
   color: var(--color);
 }
